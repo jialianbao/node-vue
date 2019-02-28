@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.add_box{
+				margin-top:100px ;
+				text-align: center;
+			}
+			.add_box>button{
+				margin: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="add_box">
+			<button id="btn">add--笑话按钮</button>
+			<button id="addimg">add--图片按钮</button>
+			
+		</div>
+	</body>
+	<script src="../../Demo/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$('#btn').on('click',function(){
+			$.ajax({
+				type:"get",
+				url:"https://bird.ioliu.cn/joke/rand",
+				async:true,
+				jsonp:'callback',
+				success:function(data){
+					data.status.code = data.status.code||''
+					if(data.status.code==200){
+						var a = JSON.stringify(data.data);
+						$.ajax({
+							type:'get',
+							url:'http://localhost:3000/add_joke',
+							async:true,
+							data:{b:a},
+							success:function(data){
+								console.log('add',data);
+							}
+						})
+					}else{
+						alert(data.status.message);
+					}
+				}
+			});
+		});
+		$('#addimg').on('click',function(){
+			$.ajax({
+				type:"get",
+				url:"https://bird.ioliu.cn/v1?url=https://bird.ioliu.cn/joke/",
+				async:true,
+				jsonp:'callback',
+				success:function(data){
+					console.log(data)
+//					data.status.code = data.status.code||''
+//					if(data.status.code==200){
+//						var a = JSON.stringify(data.data);
+//						$.ajax({
+//							type:'get',
+//							url:'http://localhost:3000/add_img',
+//							async:true,
+//							data:{b:a},
+//							success:function(data){
+//								console.log('add',data);
+//							}
+//						})
+//					}else{
+//						alert(data.status.message);
+//					}
+				}
+			});
+		});
+	</script>
+</html>

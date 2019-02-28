@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.add_box{
+				margin-top:100px ;
+				text-align: center;
+			}
+			.add_box>button{
+				margin: 20px;
+				background: url(img/yy.jpg) no-repeat;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="img/yy.jpg"/>
+		<div class="box">
+			<ul>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+				hahahahahaah<br>
+			</ul>
+			<button class="btn">getmor</button>
+		</div>
+	</body>
+	<script src="../../Demo/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		$('ul').css('background','url(img/yy.jpg) no-repeat')
+		var startNumber
+//		$('.btn').on('click',getmor);
+		$.ajax({
+			type:'get',
+			url:'http://localhost:8887/get_user',
+			async:true,
+			data:{
+  				username:'15031105381',
+  				password1:'123123'
+			},
+			dataType:'JSON',
+			success:function(data){
+				console.log(data);
+//				if(data.code == '0'){
+//					alert('获取数据错误');
+//					return false;
+//				}
+//				var str = ''
+//				for (let i = 0; i < data.data.length; i++) {
+//					str+=`<li><dl><dt>${data.data[i].content}</dt><dd><img src="${data.data[i].url}" alt="图片"></dd></dl></li>`
+//				}
+//				$('.box>ul').append(str);
+			}
+		})
+		
+		
+		function getmor(){
+			$.ajax({
+				type:'get',
+				url:'http://localhost:3000/get_joke',
+				async:true,
+				data:{
+					startNumber:$('.box>ul>li').length||'0',
+					pageSize:'10'
+				},
+				dataType:'JSON',
+				success:function(data){
+					console.log(data);
+					if(data.code == '0'){
+						alert('获取数据错误');
+						return false;
+					}
+					var str = ''
+					for (let i = 0; i < data.data.length; i++) {
+						str+=`<li><dl><dt>${data.data[i].content}</dt><dd><img src="${data.data[i].url}" alt="图片"></dd></dl></li>`
+					}
+					$('.box>ul').append(str);
+				}
+			})
+		}
+	</script>
+</html>
